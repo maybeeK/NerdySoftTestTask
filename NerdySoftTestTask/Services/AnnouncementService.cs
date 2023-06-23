@@ -76,7 +76,10 @@ namespace NerdySoftTestTask.Services
                 return default;
             }
 
-            return await _context.Announcements.Where(e => IsSimilar(originAnnouncement, e)).Take(3).ToListAsync();
+            return _context.Announcements.AsEnumerable()
+                .Where(announcement =>
+                    IsSimilar(originAnnouncement, announcement))
+                .Take(3);
 
         }
         private bool IsSimilar(Announcement originAnnouncement, Announcement announcementToCompare)
